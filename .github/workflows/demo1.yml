@@ -8,4 +8,4 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: my-step
-        run: echo "Hello, this is my first job in GitHub Actions"
+        run: echo "Hello, this is my first job in GitHub Actions by ${{variables.NAME}}"
