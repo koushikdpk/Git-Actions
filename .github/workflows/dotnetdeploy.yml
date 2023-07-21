@@ -28,7 +28,13 @@ jobs:
         
       - name: Publish
         run: dotnet publish ./helloworldapp.sln --configuration Release --no-build --output '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
-        
+     
+      - name: Publish Artifacts
+        uses: actions/upload-artifact@v3.1
+        with:
+          name: my-artifact  # Specify a name for the artifact
+          path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }/**
+          
       - name: Deployment
         uses: azure/webapps-deploy@v2
         with:
