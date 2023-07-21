@@ -33,7 +33,7 @@ jobs:
         uses: actions/upload-artifact@v3.1
         with:
           name: my-artifact  # Specify a name for the artifact
-          path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }/**
+          path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/**
           
       - name: Deployment
         uses: azure/webapps-deploy@v2
