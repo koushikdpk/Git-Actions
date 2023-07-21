@@ -22,9 +22,6 @@ jobs:
         with:
           dotnet-version: 'v4.0'
           
-      - name: Restore
-        run: dotnet restore ./helloworldapp.sln
-        
       - name: Build
         run: dotnet build ./helloworldapp.sln --configuration Release --no-restore
         
