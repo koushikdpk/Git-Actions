@@ -90,33 +90,33 @@ jobs:
         cluster-name: 'koushik-cluster'
 
     - name: Deploy frontend to AKS
-      working-directory: ./my_microservices_project
+      working-directory: ./my_microservices_project/kubernetes
       run: kubectl apply -f kubernetes/frontend-deployment.yaml
 
     - name: Deploy order-management to AKS
-      working-directory: ./my_microservices_project
+      working-directory: ./my_microservices_project/kubernetes
       run: kubectl apply -f kubernetes/order-management-deployment.yaml
 
     - name: Deploy product-catalog to AKS
-      working-directory: ./my_microservices_project
+      working-directory: ./my_microservices_project/kubernetes
       run: kubectl apply -f kubernetes/product-catalog-deployment.yaml
 
     - name: Deploy user-management to AKS
-      working-directory: ./my_microservices_project
+      working-directory: ./my_microservices_project/kubernetes
       run: kubectl apply -f kubernetes/user-management-deployment.yaml
 
     - name: Deploy frontend service to AKS
-      working-directory: ./my_microservices_project
+      working-directory: ./my_microservices_project/kubernetes
       run: kubectl apply -f kubernetes/frontend-service.yaml
 
     - name: Deploy order-management service to AKS
-      working-directory: ./my_microservices_project
+      working-directory: ./my_microservices_project/kubernetes
       run: kubectl apply -f kubernetes/order-management-service.yaml
 
     - name: Deploy product-catalog service to AKS
-      working-directory: ./my_microservices_project
+      working-directory: ./my_microservices_project/kubernetes
       run: kubectl apply -f kubernetes/product-catalog-service.yaml
 
     - name: Deploy user-management service to AKS
-      working-directory: ./my_microservices_project
+      working-directory: ./my_microservices_project/kubernetes
       run: kubectl apply -f kubernetes/user-management-service.yaml
