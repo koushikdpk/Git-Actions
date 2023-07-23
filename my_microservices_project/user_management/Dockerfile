@@ -1,12 +1,18 @@
-# Dockerfile for microservice2 (User Management)
-FROM python:3.9
+# Use the official Python image as base
+FROM python:3.9-slim
 
+# Set the working directory in the container
 WORKDIR /app
 
-COPY microservice2 /app
+# Copy the requirements file and install dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-RUN pip install -r requirements.txt
+# Copy the rest of the application code
+COPY . .
 
-EXPOSE 8002
+# Expose the port on which the application will run
+EXPOSE 5000
 
-CMD ["python", "app.py"]
+# Command to start the application
+CMD [ "python", "app.py" ]
