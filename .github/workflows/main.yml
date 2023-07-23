@@ -1,0 +1,61 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Build and test frontend
+      working-directory: ./frontend
+      run: |
+        docker build -t koushikpk.azurecr.io/frontend .
+        # Add testing steps here if applicable
+
+    - name: Build and test product_catalog
+      working-directory: ./product_catalog
+      run: |
+        docker build -t koushikpk.azurecr.io/product_catalog .
+        # Add testing steps here if applicable
+
+    - name: Build and test user_management
+      working-directory: ./user_management
+      run: |
+        docker build -t koushikpk.azurecr.io/user_management .
+        # Add testing steps here if applicable
+
+    - name: Build and test order_management
+      working-directory: ./order_management
+      run: |
+        docker build -t koushikpk.azurecr.io/order_management .
+        # Add testing steps here if applicable
+
+    - name: Login to Azure Container Registry
+      uses: azure/docker-login@v1
+      with:
+        login-server: koushikpk.azurecr.io
+        username: ${{ secrets.ACR_USERNAME }}
+        password: ${{ secrets.ACR_PASSWORD }}
+
+    - name: Push frontend image to ACR
+      working-directory: ./frontend
+      run: docker push koushikpk.azurecr.io/frontend
+
+    - name: Push product_catalog image to ACR
+      working-directory: ./product_catalog
+      run: docker push koushikpk.azurecr.io/product_catalog
+
+    - name: Push user_management image to ACR
+      working-directory: ./user_management
+      run: docker push koushikpk.azurecr.io/user_management
+
+    - name: Push order_management image to ACR
+      working-directory: ./order_management
+      run: docker push koushikpk.azurecr.io/order_management
