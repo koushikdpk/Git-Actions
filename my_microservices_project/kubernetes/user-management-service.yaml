@@ -9,4 +9,4 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 5000
-  type: NodePort  # Change the type to NodePort
+  type: NodePort   #Change the type to NodePort
