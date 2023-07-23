@@ -15,25 +15,25 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Build and test frontend
-      working-directory: ./frontend
+      working-directory: ./my_microservices_project/frontend
       run: |
         docker build -t koushikpk/frontend .
         # Add testing steps here if applicable
         
     - name: Build and test order-management
-      working-directory: ./order_management
+      working-directory: ./my_microservices_project/order_management
       run: |
         docker build -t koushikpk/order-management .
         # Add testing steps here if applicable
 
     - name: Build and test product-catalog
-      working-directory: ./product_catalog
+      working-directory: ./my_microservices_project/product_catalog
       run: |
         docker build -t koushikpk/product-catalog .
         # Add testing steps here if applicable
 
     - name: Build and test user-management
-      working-directory: ./user_management
+      working-directory: ./my_microservices_project/user_management
       run: |
         docker build -t koushikpk/user-management .
         # Add testing steps here if applicable
