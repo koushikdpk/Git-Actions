@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: product-catalog
-          image: koushikpk.azurecr.io/product_catalog:latest
+          image: koushikpk.azurecr.io/my-microservices-project/product_catalog:latest
           ports:
             - containerPort: 80
