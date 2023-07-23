@@ -91,7 +91,7 @@ jobs:
 
     - name: Deploy frontend to AKS
       working-directory: ./my_microservices_project/kubernetes
-      run: kubectl apply -f frontend-deployment.yaml
+      run: kubectl apply -f /my_microservices_project/kubernetes/frontend-deployment.yaml
 
     - name: Deploy order-management to AKS
       working-directory: ./kubernetes
