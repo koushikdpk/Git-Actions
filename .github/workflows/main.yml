@@ -88,7 +88,12 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
         resource-group: koushik
         cluster-name: 'koushik-cluster'
-
+    - name: Install kubectl
+      run: |
+        #Install kubectl on the runner
+        sudo apt-get update
+        sudo apt-get install -y kubectl
+      shell: bash
     - name: Deploy frontend to AKS
       #working-directory: ./my_microservices_project/kubernetes
       run: kubectl apply -f frontend-deployment.yaml
