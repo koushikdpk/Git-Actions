@@ -78,11 +78,10 @@ jobs:
         docker push koushikpk.azurecr.io/my-microservices-project/user-management
 
     - name: Set up Kubernetes CLI
-      uses: azure/aks-set-context@v1
+      uses: azure/aks-set-context@v3
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-        resource-group: koushik
-        cluster-name: 'koushik-cluster'
+         resource-group: 'koushik'
+         cluster-name: 'koushik-cluster'
         
     - name: Install kubectl
       run: |
