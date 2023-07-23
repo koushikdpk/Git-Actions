@@ -49,19 +49,19 @@ jobs:
         password: ${{ secrets.ACR_PASSWORD }}
 
     - name: Push frontend image to ACR
-      working-directory: ./frontend
+      working-directory: ./my_microservices_project/frontend
       run: docker push koushikpk/frontend
 
     - name: Push order-management image to ACR
-      working-directory: ./order_management
+      working-directory: ./my_microservices_project/order_management
       run: docker push koushikpk/order-management
 
     - name: Push product-catalog image to ACR
-      working-directory: ./product_catalog
+      working-directory: ./my_microservices_project/product_catalog
       run: docker push koushikpk/product-catalog
 
     - name: Push user-management image to ACR
-      working-directory: ./user_management
+      working-directory: ./my_microservices_project/user_management
       run: docker push koushikpk/user-management
 
   deploy:
