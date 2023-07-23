@@ -101,28 +101,28 @@ jobs:
 
     - name: Deploy order-management to AKS
       #working-directory: ./kubernetes
-      run: kubectl apply -f order-management-deployment.yaml
+      run: kubectl apply -f my_microservices_project/kubernetes/order-management-deployment.yaml
 
     - name: Deploy product-catalog to AKS
       #working-directory: ./my_microservices_project/kubernetes
-      run: kubectl apply -f product-catalog-deployment.yaml
+      run: kubectl apply -f my_microservices_project/kubernetes/product-catalog-deployment.yaml
 
     - name: Deploy user-management to AKS
       #working-directory: ./my_microservices_project/kubernetes
-      run: kubectl apply -f user-management-deployment.yaml
+      run: kubectl apply -f my_microservices_project/kubernetes/user-management-deployment.yaml
 
     - name: Deploy frontend service to AKS
       #working-directory: ./my_microservices_project/kubernetes
-      run: kubectl apply -f frontend-service.yaml
+      run: kubectl apply -f my_microservices_project/kubernetes/frontend-service.yaml
 
     - name: Deploy order-management service to AKS
       #working-directory: ./my_microservices_project/kubernetes
-      run: kubectl apply -f order-management-service.yaml
+      run: kubectl apply -f my_microservices_project/kubernetes/order-management-service.yaml
 
     - name: Deploy product-catalog service to AKS
       #working-directory: ./my_microservices_project/kubernetes
-      run: kubectl apply -f product-catalog-service.yaml
+      run: kubectl apply -f my_microservices_project/kubernetes/product-catalog-service.yaml
 
     - name: Deploy user-management service to AKS
       #working-directory: ./my_microservices_project/kubernetes
-      run: kubectl apply -f user-management-service.yaml
+      run: kubectl apply -f my_microservices_project/kubernetes/user-management-service.yaml
