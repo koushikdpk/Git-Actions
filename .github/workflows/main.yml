@@ -86,7 +86,7 @@ jobs:
       uses: azure/aks-set-context@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
-        kubernetes-version: 'latest'
+        resource-group: koushik
         cluster-name: 'koushik-cluster'
 
     - name: Deploy frontend to AKS
