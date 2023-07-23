@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: user-management
-          image: my-microservices-project/user_management:latest
+          image: my-microservices-project/user-management:latest
           ports:
             - containerPort: 80
