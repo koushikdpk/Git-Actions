@@ -12,14 +12,14 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Build and test frontend
       working-directory: ./frontend
       run: |
         docker build -t koushikpk/frontend .
         # Add testing steps here if applicable
-      shell: bash
+        
     - name: Build and test order-management
       working-directory: ./order_management
       run: |
