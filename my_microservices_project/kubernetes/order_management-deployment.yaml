@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: order-management
-          image: koushikpk.azurecr.io/order_management:latest
+          image: koushikpk.azurecr.io/my-microservices-project/order_management:latest
           ports:
             - containerPort: 80
