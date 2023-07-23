@@ -99,28 +99,28 @@ jobs:
       run: |
         az acr login --name koushikpk.azurecr.io
         docker pull koushikpk.azurecr.io/my-microservices-project/frontend
-        docker tag koushikpk.azurecr.io/my-microservices-project/frontend my-microservices-project/frontend
+        docker tag koushikpk.azurecr.io/my-microservices-project/frontend
       shell: bash
 
     - name: Pull order-management image from ACR
       run: |
         az acr login --name koushikpk.azurecr.io
         docker pull koushikpk.azurecr.io/my-microservices-project/order-management
-        docker tag koushikpk.azurecr.io/my-microservices-project/order-management my-microservices-project/order-management
+        docker tag koushikpk.azurecr.io/my-microservices-project/order-management
       shell: bash
   
     - name: Pull product_catalog image from ACR
       run: |
         az acr login --name koushikpk.azurecr.io
-        docker pull koushikpk.azurecr.io/my-microservices-project/product_catalog
-        docker tag koushikpk.azurecr.io/my-microservices-project/order-management my-microservices-project/product_catalog
+        docker pull koushikpk.azurecr.io/my-microservices-project/product-catalog
+        docker tag koushikpk.azurecr.io/my-microservices-project/product-catalog
       shell: bash
 
     - name: Pull user_management image from ACR
       run: |
         az acr login --name koushikpk.azurecr.io
-        docker pull koushikpk.azurecr.io/my-microservices-project/user_management
-        docker tag koushikpk.azurecr.io/my-microservices-project/order-management my-microservices-project/user_management
+        docker pull koushikpk.azurecr.io/my-microservices-project/user-management
+        docker tag koushikpk.azurecr.io/my-microservices-project/user-management
       shell: bash
 
     - name: Deploy frontend to AKS
