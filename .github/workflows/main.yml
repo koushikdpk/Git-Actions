@@ -40,6 +40,10 @@ jobs:
       run: |
         docker build -t koushikpk/user-management .
         # Add testing steps here if applicable
+    - name: Login to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
 
     - name: Login to Azure Container Registry
       uses: azure/docker-login@v1
@@ -50,19 +54,27 @@ jobs:
 
     - name: Push frontend image to ACR
       working-directory: ./my_microservices_project/frontend
-      run: docker push koushikpk/frontend
+      run: |
+        docker build -t koushikpk.azurecr.io/my-microservices-project/frontend .
+        docker push koushikpk.azurecr.io/my-microservices-project/frontend
 
     - name: Push order-management image to ACR
       working-directory: ./my_microservices_project/order_management
-      run: docker push koushikpk/order-management
+      run: |
+        docker build -t koushikpk.azurecr.io/my-microservices-project/order-management .
+        docker push koushikpk.azurecr.io/my-microservices-project/order-management
 
     - name: Push product-catalog image to ACR
       working-directory: ./my_microservices_project/product_catalog
-      run: docker push koushikpk/product-catalog
+      run: |
+        docker build -t koushikpk.azurecr.io/my-microservices-project/product-catalog .
+        docker push koushikpk.azurecr.io/my-microservices-project/product-catalog
 
     - name: Push user-management image to ACR
       working-directory: ./my_microservices_project/user_management
-      run: docker push koushikpk/user-management
+      run: |
+        docker build -t koushikpk.azurecr.io/my-microservices-project/user-management .
+        docker push koushikpk.azurecr.io/my-microservices-project/user-management
 
   deploy:
     needs: build
@@ -74,7 +86,7 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
         kubernetes-version: 'latest'
-        cluster-name: 'my-aks-cluster'
+        cluster-name: 'koushik-cluster'
 
     - name: Deploy frontend to AKS
       run: kubectl apply -f kubernetes/frontend-deployment.yaml
