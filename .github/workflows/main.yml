@@ -40,6 +40,9 @@ jobs:
       run: |
         docker build -t koushikpk/user-management .
         # Add testing steps here if applicable
+    - name: Install Azure CLI
+      uses: azure/CLI@v1
+
     - name: Login to Azure
       uses: azure/login@v1
       with:
