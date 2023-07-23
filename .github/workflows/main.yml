@@ -15,6 +15,7 @@ jobs:
       uses: actions/checkout@v3
       
     - name: Set up Docker Buildx
+      id: buildx
       uses: docker/setup-buildx-action@v1
 
     - name: Build and test frontend
@@ -40,8 +41,6 @@ jobs:
       run: |
         docker build -t koushikpk/user-management .
         # Add testing steps here if applicable
-    - name: Install Azure CLI
-      uses: azure/CLI@v1
 
     - name: Login to Azure
       uses: azure/login@v1
