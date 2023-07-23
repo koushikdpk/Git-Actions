@@ -90,11 +90,11 @@ jobs:
         cluster-name: 'koushik-cluster'
 
     - name: Deploy frontend to AKS
-      working-directory: ./my_microservices_project/kubernetes
+      working-directory: ./kubernetes
       run: kubectl apply -f frontend-deployment.yaml
 
     - name: Deploy order-management to AKS
-      working-directory: ./my_microservices_project/kubernetes
+      working-directory: ./kubernetes
       run: kubectl apply -f order-management-deployment.yaml
 
     - name: Deploy product-catalog to AKS
