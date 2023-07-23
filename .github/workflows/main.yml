@@ -77,6 +77,10 @@ jobs:
         docker build -t koushikpk.azurecr.io/my-microservices-project/user-management .
         docker push koushikpk.azurecr.io/my-microservices-project/user-management
 
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        
     - name: Set up Kubernetes CLI
       uses: azure/aks-set-context@v3
       with:
