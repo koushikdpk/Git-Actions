@@ -19,7 +19,7 @@ jobs:
       run: |
         docker build -t koushikpk/frontend .
         # Add testing steps here if applicable
-
+      shell: bash
     - name: Build and test order-management
       working-directory: ./order_management
       run: |
