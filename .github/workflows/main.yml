@@ -30,7 +30,7 @@ jobs:
          password: ${{ secrets.ACR_PASSWORD }}
          
       - name: Push frontend image to ACR
-        working-directory: ./my-project
+        working-directory: ./
         run: |
           docker build -t koushikpk.azurecr.io/my-project .
           docker push koushikpk.azurecr.io/my-project
@@ -59,4 +59,4 @@ jobs:
 
        
       - name: Deploy app to AKS
-        run: kubectl apply -f my-project/deployment.yaml
+        run: kubectl apply -f deployment.yaml
