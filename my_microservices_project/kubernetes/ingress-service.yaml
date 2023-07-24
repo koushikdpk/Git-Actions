@@ -4,7 +4,7 @@ metadata:
   name: my-microservices-ingress
 spec:
   rules:
-    - host: frontend.example.com
+    - host: frontend.koushikweb.online
       http:
         paths:
           - path: /
@@ -14,7 +14,7 @@ spec:
                 name: frontend
                 port:
                   number: 80
-    - host: order.example.com
+    - host: order.koushikweb.online
       http:
         paths:
           - path: /
@@ -24,7 +24,7 @@ spec:
                 name: order-management
                 port:
                   number: 80
-    - host: product.example.com
+    - host: product.koushikweb.online
       http:
         paths:
           - path: /
@@ -34,7 +34,7 @@ spec:
                 name: product-catalog
                 port:
                   number: 80
-    - host: user.example.com
+    - host: user.koushikweb.online
       http:
         paths:
           - path: /
