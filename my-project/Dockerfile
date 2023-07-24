@@ -16,7 +16,7 @@ RUN . venv/bin/activate
 
 # Install Python dependencies in the virtual environment
 RUN pip install -r requirements.txt
-
+ENV FLASK_APP=Home.py
 # Expose the port on which Flask will run
 EXPOSE 5000
 
