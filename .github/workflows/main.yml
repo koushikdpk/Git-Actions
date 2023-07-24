@@ -142,9 +142,6 @@ jobs:
     - name: Deploy frontend service to AKS
       #working-directory: ./my_microservices_project/kubernetes
       run: kubectl apply -f my_microservices_project/kubernetes/frontend-service.yaml
-      
-    - name: Deploy ingress to AKS 
-      run: kubectl apply -f my_microservices_project/kubernetes/ingress.yaml
 
     - name: Deploy order-management service to AKS
       #working-directory: ./my_microservices_project/kubernetes
