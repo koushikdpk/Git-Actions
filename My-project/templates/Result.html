@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Result</title>
+</head>
+<body>
+
+      <table border = 1>
+         {% for key, value in result.items() %}
+          {% if key != "submit" %}
+            <tr>
+                {% if key == "name" %}
+                    <th>Employee Name </th>
+                {% elif key == "designation" %}
+                    <th>Designation </th>
+                {% elif key == "role" %}
+                    <th>Role </th>
+                {% elif key == "experience" %}
+                <th> Experience </th>
+                {% endif %}
+
+                <td> {{ value }} </td>
+            </tr>
+          {% endif %}
+
+         {% endfor %}
+      </table>
+
+   </body>
+</html>
