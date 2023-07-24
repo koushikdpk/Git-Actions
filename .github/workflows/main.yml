@@ -140,7 +140,7 @@ jobs:
       run: kubectl apply -f my_microservices_project/kubernetes/user_management-deployment.yaml
 
     - name: Deploy ingressto AKS
-      run: kubectl apply -f ingress-service.yaml
+      run: kubectl apply -f my_microservices_project/kubernetes/ingress-service.yaml
 
     - name: Deploy frontend service to AKS
       #working-directory: ./my_microservices_project/kubernetes
