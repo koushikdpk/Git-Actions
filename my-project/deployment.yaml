@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: my-flask-app
-          image: koushikpk.azurecr.io/My-project
+          image: koushikpk.azurecr.io/my-project:latest
           ports:
             - containerPort: 80
           env:
