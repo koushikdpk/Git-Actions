@@ -19,9 +19,6 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Set up Azure CLI
-        run: az extension add --name aks
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
          
