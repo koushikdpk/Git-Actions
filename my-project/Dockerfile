@@ -8,4 +8,4 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-CMD ["python", "home.py"]
+CMD ["python", "my-project/Home.py"]
