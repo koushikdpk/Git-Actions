@@ -1,159 +1,62 @@
-name: KubernetesDeployment
+name: Deploy to AKS
 
 on:
-  workflow_dispatch:
   push:
     branches:
-    - main
+      - main
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-      
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Build and test frontend
-      working-directory: ./my_microservices_project/frontend
-      run: |
-        docker build -t koushikpk/frontend .
-        # Add testing steps here if applicable
-        
-    - name: Build and test order-management
-      working-directory: ./my_microservices_project/order_management
-      run: |
-        docker build -t koushikpk/order-management .
-        # Add testing steps here if applicable
+      - name: Log in to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    - name: Build and test product-catalog
-      working-directory: ./my_microservices_project/product_catalog
-      run: |
-        docker build -t koushikpk/product-catalog .
-        # Add testing steps here if applicable
+      - name: Set up Azure CLI
+        run: az extension add --name aks
 
-    - name: Build and test user-management
-      working-directory: ./my_microservices_project/user_management
-      run: |
-        docker build -t koushikpk/user-management .
-        # Add testing steps here if applicable
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+         
+      - name: Login to Azure Container Registry
+        uses: azure/docker-login@v1
+        with:
+         login-server: koushikpk.azurecr.io
+         username: ${{ secrets.ACR_USERNAME }}
+         password: ${{ secrets.ACR_PASSWORD }}
+         
+      - name: Push frontend image to ACR
+        working-directory: ./My-project
+        run: |
+          docker build -t koushikpk.azurecr.io/My-project .
+          docker push koushikpk.azurecr.io/My-project
 
-    - name: Login to Azure
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-    - name: Login to Azure Container Registry
-      uses: azure/docker-login@v1
-      with:
-        login-server: koushikpk.azurecr.io
-        username: ${{ secrets.ACR_USERNAME }}
-        password: ${{ secrets.ACR_PASSWORD }}
-
-    - name: Push frontend image to ACR
-      working-directory: ./my_microservices_project/frontend
-      run: |
-        docker build -t koushikpk.azurecr.io/my-microservices-project/frontend .
-        docker push koushikpk.azurecr.io/my-microservices-project/frontend
-
-    - name: Push order-management image to ACR
-      working-directory: ./my_microservices_project/order_management
-      run: |
-        docker build -t koushikpk.azurecr.io/my-microservices-project/order-management .
-        docker push koushikpk.azurecr.io/my-microservices-project/order-management
-
-    - name: Push product-catalog image to ACR
-      working-directory: ./my_microservices_project/product_catalog
-      run: |
-        docker build -t koushikpk.azurecr.io/my-microservices-project/product-catalog .
-        docker push koushikpk.azurecr.io/my-microservices-project/product-catalog
-
-    - name: Push user-management image to ACR
-      working-directory: ./my_microservices_project/user_management
-      run: |
-        docker build -t koushikpk.azurecr.io/my-microservices-project/user-management .
-        docker push koushikpk.azurecr.io/my-microservices-project/user-management
-
-    - uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-        
-    - name: Set up Kubernetes CLI
-      uses: azure/aks-set-context@v3
-      with:
+      - name: Set up Kubernetes CLI
+        uses: azure/aks-set-context@v3
+        with:
          resource-group: 'koushik'
          cluster-name: 'koushik-cluster'
         
-    - name: Install kubectl
-      run: |
-        echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
-        curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-        sudo apt-get update
-        sudo apt-get install -y kubectl
-      shell: bash
-      
-    - name: Pull frontend image from ACR
-      run: |
-        az acr login --name koushikpk.azurecr.io
-        docker pull koushikpk.azurecr.io/my-microservices-project/frontend
-        docker tag koushikpk.azurecr.io/my-microservices-project/frontend my-microservices-project/frontend
-      shell: bash
-
-    - name: Pull order-management image from ACR
-      run: |
-        az acr login --name koushikpk.azurecr.io
-        docker pull koushikpk.azurecr.io/my-microservices-project/order-management
-        docker tag koushikpk.azurecr.io/my-microservices-project/order-management my-microservices-project/order-management
-      shell: bash
-  
-    - name: Pull product_catalog image from ACR
-      run: |
-        az acr login --name koushikpk.azurecr.io
-        docker pull koushikpk.azurecr.io/my-microservices-project/product-catalog
-        docker tag koushikpk.azurecr.io/my-microservices-project/product-catalog my-microservices-project/product-catalog
-      shell: bash
-
-    - name: Pull user_management image from ACR
-      run: |
-        az acr login --name koushikpk.azurecr.io
-        docker pull koushikpk.azurecr.io/my-microservices-project/user-management
-        docker tag koushikpk.azurecr.io/my-microservices-project/user-management my-microservices-project/user-management
-      shell: bash
-
-    - name: Deploy frontend to AKS
-      #working-directory: ./my_microservices_project/kubernetes
-      run: kubectl apply -f my_microservices_project/kubernetes/frontend-deployment.yaml
-
-    - name: Deploy order-management to AKS
-      #working-directory: ./kubernetes
-      run: kubectl apply -f my_microservices_project/kubernetes/order_management-deployment.yaml
-
-    - name: Deploy product-catalog to AKS
-      #working-directory: ./my_microservices_project/kubernetes
-      run: kubectl apply -f my_microservices_project/kubernetes/product_catalog-deployment.yaml
-
-    - name: Deploy user-management to AKS
-      #working-directory: ./my_microservices_project/kubernetes
-      run: kubectl apply -f my_microservices_project/kubernetes/user_management-deployment.yaml
-
-    - name: Deploy ingressto AKS
-      run: kubectl apply -f my_microservices_project/kubernetes/ingress-service.yaml
-
-    - name: Deploy frontend service to AKS
-      #working-directory: ./my_microservices_project/kubernetes
-      run: kubectl apply -f my_microservices_project/kubernetes/frontend-service.yaml
-
-    - name: Deploy order-management service to AKS
-      #working-directory: ./my_microservices_project/kubernetes
-      run: kubectl apply -f my_microservices_project/kubernetes/order-management-service.yaml
-
-    - name: Deploy product-catalog service to AKS
-      #working-directory: ./my_microservices_project/kubernetes
-      run: kubectl apply -f my_microservices_project/kubernetes/product-catalog-service.yaml
-
-    - name: Deploy user-management service to AKS
-      #working-directory: ./my_microservices_project/kubernetes
-      run: kubectl apply -f my_microservices_project/kubernetes/user-management-service.yaml
+      - name: Install kubectl
+        run: |
+         echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+         curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+         sudo apt-get update
+         sudo apt-get install -y kubectl
+        shell: bash
+        
+      - name: Pull user_management image from ACR
+        run: |
+         az acr login --name koushikpk.azurecr.io
+         docker pull koushikpk.azurecr.io/My-project
+         docker tag koushikpk.azurecr.io/My-project
+        shell: bash
+       
+      - name: Deploy app to AKS
+        run: kubectl apply -f My-project/deployment.yaml
