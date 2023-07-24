@@ -30,10 +30,10 @@ jobs:
          password: ${{ secrets.ACR_PASSWORD }}
          
       - name: Push frontend image to ACR
-        working-directory: ./My-project
+        working-directory: ./my-project
         run: |
-          docker build -t koushikpk.azurecr.io/My-project .
-          docker push koushikpk.azurecr.io/My-project
+          docker build -t koushikpk.azurecr.io/my-project .
+          docker push koushikpk.azurecr.io/my-project
 
       - name: Set up Kubernetes CLI
         uses: azure/aks-set-context@v3
@@ -52,9 +52,9 @@ jobs:
       - name: Pull user_management image from ACR
         run: |
          az acr login --name koushikpk.azurecr.io
-         docker pull koushikpk.azurecr.io/My-project
-         docker tag koushikpk.azurecr.io/My-project
+         docker pull koushikpk.azurecr.io/my-project
+         docker tag koushikpk.azurecr.io/my-project
         shell: bash
        
       - name: Deploy app to AKS
-        run: kubectl apply -f My-project/deployment.yaml
+        run: kubectl apply -f my-project/deployment.yaml
