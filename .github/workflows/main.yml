@@ -53,7 +53,7 @@ jobs:
         run: |
          az acr login --name koushikpk.azurecr.io
          docker pull koushikpk.azurecr.io/my-project
-         docker tag koushikpk.azurecr.io/my-project
+         docker tag koushikpk.azurecr.io/my-project:latest
         shell: bash
        
       - name: Deploy app to AKS
