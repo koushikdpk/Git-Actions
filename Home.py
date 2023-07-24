@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 
 from form import EmployeeForm
 
-app = Flask(__name__, template_folder='my-project/templates')
+app = Flask(__name__, template_folder='templates')
 app.config['SECRET_KEY'] = 'LongAndRandomSecretKey'
 
 color="beige"
