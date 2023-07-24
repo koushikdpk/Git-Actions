@@ -49,12 +49,13 @@ jobs:
          sudo apt-get install -y kubectl
         shell: bash
         
-      - name: Pull user_management image from ACR
+      - name: Pull and tag user_management image from ACR
         run: |
          az acr login --name koushikpk.azurecr.io
-         docker pull koushikpk.azurecr.io/my-project
+         docker build -t my-project .
          docker tag my-project:latest koushikpk.azurecr.io/my-project:latest
         shell: bash
+
        
       - name: Deploy app to AKS
         run: kubectl apply -f my-project/deployment.yaml
