@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo Home</title>
+</head>
+<body style="background-color: {{color}}">
+
+	<form action = "/result" method = "POST">
+		<div class="form-row">
+        	<div class="form-group col-md-6">
+				<p>Employee Name {{form.name}}</p>
+				<p>Designation {{form.designation}}</p>
+				<p>Role {{form.role}}</p>
+				<p>Experience(in years) {{form.experience}}</p>
+			</div>
+        	<div class="form-group">
+            	{{ form.submit(class="btn btn-primary")}}
+        	</div>
+    	</div>
+	</form>
+</body>
+</html>
