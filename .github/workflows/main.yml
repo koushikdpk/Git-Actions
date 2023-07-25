@@ -60,3 +60,13 @@ jobs:
        
       - name: Deploy app to AKS
         run: kubectl apply -f deployment.yaml
+        
+      - name: Get public IP of the service
+        id: get-ip
+        run: |
+          PUBLIC_IP=$(kubectl get svc my-flask-service -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
+          echo "Public IP of the service: $PUBLIC_IP"
+        continue-on-error: true
+        
+      - name: Display public IP
+        run: echo "Public IP of the service:${{ steps.get-ip.outputs.PUBLIC_IP }}"
