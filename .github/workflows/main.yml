@@ -56,17 +56,21 @@ jobs:
          docker tag koushikpk.azurecr.io/my-project:latest koushikpk.azurecr.io/my-project:latest
         shell: bash
 
-
-       
       - name: Deploy app to AKS
         run: kubectl apply -f deployment.yaml
         
       - name: Get public IP of the service
         id: get-ip
         run: |
-          PUBLIC_IP=$(kubectl get svc my-flask-service -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
-          echo "Public IP of the service: $PUBLIC_IP"
-           echo "::set-output name=public_ip::$PUBLIC_IP" # Set an output variable
+         kubectl get svc my-flask-service -o yaml
+         PUBLIC_IP=$(kubectl get svc my-flask-service -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
+         echo "Public IP of the service: $PUBLIC_IP"
+         echo "kubectl output:"
+         kubectl get svc my-flask-service
+         echo "kubectl describe svc:"
+         kubectl describe svc my-flask-service
+         echo "::set-output name=public_ip::$PUBLIC_IP" # Set an output variable
+          continue-on-error: true
 
       - name: Display public IP
         run: echo "Public IP of the service:${{ steps.get-ip.outputs.public_ip }}"
