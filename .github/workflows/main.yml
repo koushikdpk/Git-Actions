@@ -72,18 +72,21 @@ jobs:
          echo "::set-output name=public_ip::$PUBLIC_IP" # Set an output variable
 
       - name: Display public IP
-        run: echo "Public IP of the service:${{ steps.get-ip.outputs.public_ip }}"
-  
-      - name: Send email
-        uses: devellany/send-mail@v1.0.2
+        run: echo "Public IP of the service:${{ steps.get-ip.outputs.public_ip }}"        
+   
+      - name: Send some mail
+        uses: wadeww/send-email-action@master
         with:
-          host: smtp.gmail.com
+          server_address: smtp.gmail.com
           port: 587
-          account: kdamaraju@primesoft.net
-          password: ${{ secrets.SMTP_PASSWORD }}
-          sender: Kdamaraju
-          from: kdamaraju@primesoft.net
-          to: dmaity@primesoft.net
+          username: kdamaraju@primesoft.net
+          password: ${{secrets.SMTP_PASSWORD}}
           subject: Build Results of GIT Actions
-          body: Hi how are you
-            
+          body: Job completed ${{job.status}}
+          to: sveerubhotla@primesoft.net
+          from: kdamaraju@primesoft.net
+   
+   
+   
+   
+   
