@@ -66,7 +66,7 @@ jobs:
         run: |
           PUBLIC_IP=$(kubectl get svc my-flask-service -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
           echo "Public IP of the service: $PUBLIC_IP"
-        continue-on-error: true
-        
+           echo "::set-output name=public_ip::$PUBLIC_IP" # Set an output variable
+
       - name: Display public IP
-        run: echo "Public IP of the service:${{ steps.get-ip.outputs.PUBLIC_IP }}"
+        run: echo "Public IP of the service:${{ steps.get-ip.outputs.public_ip }}"
