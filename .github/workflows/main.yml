@@ -85,7 +85,6 @@ jobs:
           from: kdamaraju@primesoft.net
           to: dmaity@primesoft.net
           subject: "Build Results of GIT Actions"
-          contentType: "text/html"
           body: |
             <html>
             <body>
@@ -106,4 +105,4 @@ jobs:
             <p>Thanks & Regards,</p>
             </body>
             </html>
-
+          contentType: text/html
