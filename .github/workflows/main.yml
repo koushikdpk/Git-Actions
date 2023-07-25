@@ -77,14 +77,16 @@ jobs:
       - name: Send email
         uses: devellany/send-mail@v1.0.2
         env:
-          SMTP_HOST: smtp.gmail.com
-          SMTP_PORT: 587
-          SMTP_USER: kdamaraju@primesoft.net
-          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
-          EMAIL_FROM: kdamaraju@primesoft.net
-          EMAIL_TO: dmaity@primesoft.net
-          EMAIL_SUBJECT: "Build Results of GIT Actions"
-          EMAIL_BODY: |
+          host: smtp.gmail.com
+          port: 587
+          account: kdamaraju@primesoft.net
+          password: ${{ secrets.SMTP_PASSWORD }}
+          sender: Kdamaraju
+          from: kdamaraju@primesoft.net
+          to: dmaity@primesoft.net
+          subject: "Build Results of GIT Actions"
+          contentType: "text/html"
+          body: |
             <html>
             <body>
             <p>Hi Team,</p>
