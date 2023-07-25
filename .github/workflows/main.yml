@@ -84,25 +84,6 @@ jobs:
           sender: Kdamaraju
           from: kdamaraju@primesoft.net
           to: dmaity@primesoft.net
-          subject: "Build Results of GIT Actions"
-          body: |
-            <html>
-            <body>
-            <p>Hi Team,</p>
-            <p>Please find the Build Results of GIT Actions:</p>
-            <table border="1" cellpadding="5">
-            <tr>
-            <th>JobName</th>
-            <th>Status</th>
-            <th>Build Details</th>
-            </tr>
-            <tr>
-            <td>test</td>
-            <td>FAILURE</td>
-            <td>Build-77</td>
-            </tr>
-            </table>
-            <p>Thanks & Regards,</p>
-            </body>
-            </html>
-          contentType: text/html
+          subject: Build Results of GIT Actions
+          body: Hi how are you
+            
