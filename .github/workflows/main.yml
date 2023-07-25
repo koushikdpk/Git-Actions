@@ -74,35 +74,34 @@ jobs:
       - name: Display public IP
         run: echo "Public IP of the service:${{ steps.get-ip.outputs.public_ip }}"
   
-      - name: Send mailer
+      - name: Send email
         uses: devellany/send-mail@v1.0.2
-        with:
-         host: smtp.example.com
-         account: kdamaraju@primesoft.net
-         password: ${{ secrets.SMTP_PASSWORD }}
-         port: 587
-         sender: Your Name
-         from: kdamaraju@primesoft.net
-         to: dmaity@primesoft.net
-         subject: "Build Results of GIT Action"
-         contentType: "text/html"
-         body: |
-           <html>
-           <body>
-             <p>Hi Team,</p>
-             <p>Please find the Build Results of GIT Actions:</p>
-             <table border="1" cellpadding="5">
-             <tr>
-             <th>JobName</th>
-             <th>Status</th>
-             <th>Build Details</th>
-             </tr>
-             <tr>
-             <td>test</td>
-             <td>FAILURE</td>
-             <td>Build-77</td>
-             </tr>
-             </table>
-              <p>Thanks & Regards,</p>
+        env:
+          SMTP_HOST: smtp.gmail.com
+          SMTP_PORT: 587
+          SMTP_USER: kdamaraju@primesoft.net
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          EMAIL_FROM: kdamaraju@primesoft.net
+          EMAIL_TO: dmaity@primesoft.net
+          EMAIL_SUBJECT: "Build Results of GIT Actions"
+          EMAIL_BODY: |
+            <html>
+            <body>
+            <p>Hi Team,</p>
+            <p>Please find the Build Results of GIT Actions:</p>
+            <table border="1" cellpadding="5">
+            <tr>
+            <th>JobName</th>
+            <th>Status</th>
+            <th>Build Details</th>
+            </tr>
+            <tr>
+            <td>test</td>
+            <td>FAILURE</td>
+            <td>Build-77</td>
+            </tr>
+            </table>
+            <p>Thanks & Regards,</p>
             </body>
             </html>
+
