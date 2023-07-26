@@ -66,6 +66,7 @@ jobs:
          kubectl get svc my-flask-service -o yaml
          PUBLIC_IP=$(kubectl get svc my-flask-service -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
          echo "Public IP of the service: $PUBLIC_IP"
+         kubectl describe svc my-flask-service
          echo "::set-output name=public_ip::$PUBLIC_IP" # Set an output variable
 
       - name: Display public IP
