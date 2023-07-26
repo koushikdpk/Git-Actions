@@ -74,47 +74,58 @@ jobs:
       - name: Display public IP
         run: echo "Public IP of the service:${{ steps.get-ip.outputs.public_ip }}"        
    
-      - name: PowerShell script
-        # You may pin to the exact commit or the version.
-        # uses: Amadevus/pwsh-script@97a8b211a5922816aa8a69ced41fa32f23477186
-        uses: Amadevus/pwsh-script@v2.0.3
-        with:
-        # PowerShell script to execute in Actions-hydrated context
-         script: |
-             $subject = "Build Results of GIT Actions + ${{github.run_number}}"
-             $emailBody = "<h4>Hi Team,<h4><br>
-                           <h4>Please find the below details of GitHub actions run :</H4>"
-             $mainContent = "<br><br><br>
-             <table border='1' cellpadding='5'>
-                         <tr>
-                    <th>JobName</th>
-                    <th>Status</th>
-                    <th>Build Details</th>
-                    <th>TriggeredBy</th>
-                          </tr>
-                          <tr>
-                    <td>${github.workflow}</td>
-                    <td>${{ job.status }}</td>
-                    <td>${github.repositoryUrl}</td>
-                   <td>${github.actor}</td>
-                          </tr>
-                        </table>
-                      <div>
-                       <table>
-              <tr><td style='border: 0px'>Thanks,</td>
-             <tr><td style='border: 0px'>Koushik</td></tr>
-             </table>
-             </div>"
-             $html = "<html>
-             <style>
-              BODY{background: white; font-family: 'Trebuchet MS', Arial, Helvetica, sans-serif; font-size: 12px;}
-             H1{font-size: 16px}
-             H2{font-size: 10px}
-             H3{font-size: 12px}
-             </style>
-              <body>" + $emailBody + $mainContent + $footer + "</body></html>"
-             Send-MailMessage -Body $html -BodyAsHtml -From "kdamaraju@primesof.net" -SmtpServer "smtp.gmail.com" -Subject $subject -To "dmaity@primesoft.net"
-             Write-Host "Email sent"
+      - name: Send Email
+        run: |
+         $ErrorActionPreference = "Stop"
+         Install-Module -Name MailKit -Force -AllowClobber -Scope CurrentUser
+         $from = "kdamaraju@primesoft.net"
+          $to = "dmaity@primesoft.net"
+         $subject = "Build Results of GitHub Actions"
+         $htmlBody = @"
+         <html>
+         <body>
+         <p>Hi Team,</p>
+         <p>Please find the below details of GitHub Actions:</p>
+         <table border="1" cellpadding="5">
+          <tr>
+          <th>JobName</th>
+          <th>Status</th>
+          <th>Build Details</th>
+          <th>TriggeredBy</th>
+          </tr>
+           <tr>
+           <td>${{ github.workflow }}</td>
+             <td>${{ job.status }}</td>
+           <td>${{ github.server_url }}</td>
+              <td>${{ github.actor }}</td>
+            </tr>
+           </table>
+           <p>Thanks and Regards,</p>
+           <p>***</p>
+           </body>
+           </html>
+             "@
+
+           $smtpServer = "smtp.gmail.com"
+           $smtpPort = 587
+           $smtpUsername = "kdamaraju@primesoft.net"
+           $smtpPassword = "${{ secrets.SMTP_PASSWORD }}"
+
+           $mailSettings = @{
+           From = $from
+           To = $to
+            Subject = $subject
+           Body = $htmlBody
+             BodyAsHtml = $true
+            SmtpServer = $smtpServer
+             Port = $smtpPort
+             UseSsl = $true
+             Credential = (New-Object System.Management.Automation.PSCredential -ArgumentList $smtpUsername, (ConvertTo-SecureString -AsPlainText $smtpPassword -Force))
+             }
+
+            Send-MailKitMessage @mailSettings
+           env:
+            SENDMAIL_PATH: /usr/sbin/sendmail
    
    
    
