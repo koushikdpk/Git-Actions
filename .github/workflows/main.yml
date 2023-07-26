@@ -79,7 +79,7 @@ jobs:
          $ErrorActionPreference = "Stop"
          Install-Module -Name MailKit -Force -AllowClobber -Scope CurrentUser
          $from = "kdamaraju@primesoft.net"
-          $to = "dmaity@primesoft.net"
+         $to = "dmaity@primesoft.net"
          $subject = "Build Results of GitHub Actions"
          $htmlBody = @"
          <html>
@@ -93,8 +93,8 @@ jobs:
           <th>Build Details</th>
           <th>TriggeredBy</th>
           </tr>
-           <tr>
-           <td>${{ github.workflow }}</td>
+          <tr>
+          <td>${{ github.workflow }}</td>
              <td>${{ job.status }}</td>
            <td>${{ github.server_url }}</td>
               <td>${{ github.actor }}</td>
@@ -104,28 +104,25 @@ jobs:
            <p>***</p>
            </body>
            </html>
-             "@
-
+         "@
            $smtpServer = "smtp.gmail.com"
            $smtpPort = 587
            $smtpUsername = "kdamaraju@primesoft.net"
            $smtpPassword = "${{ secrets.SMTP_PASSWORD }}"
-
            $mailSettings = @{
            From = $from
            To = $to
-            Subject = $subject
+           Subject = $subject
            Body = $htmlBody
-             BodyAsHtml = $true
-            SmtpServer = $smtpServer
-             Port = $smtpPort
-             UseSsl = $true
-             Credential = (New-Object System.Management.Automation.PSCredential -ArgumentList $smtpUsername, (ConvertTo-SecureString -AsPlainText $smtpPassword -Force))
-             }
-
-            Send-MailKitMessage @mailSettings
-           env:
-            SENDMAIL_PATH: /usr/sbin/sendmail
+           BodyAsHtml = $true
+           SmtpServer = $smtpServer
+           Port = $smtpPort
+           UseSsl = $true
+           Credential = (New-Object System.Management.Automation.PSCredential -ArgumentList $smtpUsername, (ConvertTo-SecureString -AsPlainText $smtpPassword -Force))
+           }
+           Send-MailKitMessage @mailSettings
+        env:
+          SENDMAIL_PATH: /usr/sbin/sendmail
    
    
    
