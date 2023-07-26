@@ -74,7 +74,24 @@ jobs:
       - name: Display public IP
         run: echo "Public IP of the service:${{ steps.get-ip.outputs.public_ip }}"        
    
-      - name: Send Email
+      - name: Send mail
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          secure: true
+          username: kdamaraju@primesoft.net
+          password: ${{ secrets.SMTP_PASSWORD }}
+          subject: Github Actions job result
+          to: dmaity@primesoft.net
+          from: kdamaraju@primesoft.net
+          body: Build job of ${{github.repository}} details!
+          # Optional HTML body read from file:
+          html_body: file:./output.html
+          convert_markdown: true
+          priority: low
+
+      - name: Send Emails
         run: |
          $ErrorActionPreference = "Stop"
          Install-Module -Name MailKit -Force -AllowClobber -Scope CurrentUser
