@@ -74,72 +74,19 @@ jobs:
       - name: Display public IP
         run: echo "Public IP of the service:${{ steps.get-ip.outputs.public_ip }}"        
    
-      - name: Send mail
-        uses: dawidd6/action-send-mail@v3.6.0
+      - name: Send some mail
+        uses: wadeww/send-email-action@master
         with:
           server_address: smtp.gmail.com
-          server_port: 587
-          secure: true
+          port: 587
           username: kdamaraju@primesoft.net
-          password: ${{ secrets.SMTP_PASSWORD }}
-          subject: Github Actions job result
+          password: ${{secrets.SMTP_PASSWORD}}
+          subject: Build Results of GIT Actions
+          body: Please find the below details of GITHub actions.... 
+                
+                | JobName                  | Status          | Build Details                    | TriggeredBy       |
+                |--------------------------|-----------------|----------------------------------|-------------------|
+                | ${{github.workflow}}     | ${{ job.status }}  | ${{github.repositoryUrl}}     | ${{github.actor}} |
           to: dmaity@primesoft.net
           from: kdamaraju@primesoft.net
-          body: Build job of ${{github.repository}} details!
-          # Optional HTML body read from file:
-          html_body: file:./output.html
-          convert_markdown: true
-          priority: low
-
-      - name: Send Emails
-        run: |
-         $ErrorActionPreference = "Stop"
-         Install-Module -Name MailKit -Force -AllowClobber -Scope CurrentUser
-         $from = "kdamaraju@primesoft.net"
-         $to = "dmaity@primesoft.net"
-         $subject = "Build Results of GitHub Actions"
-         $htmlBody = @"
-         <html>
-         <body>
-         <p>Hi Team,</p>
-         <p>Please find the below details of GitHub Actions:</p>
-         <table border="1" cellpadding="5">
-          <tr>
-          <th>JobName</th>
-          <th>Status</th>
-          <th>Build Details</th>
-          <th>TriggeredBy</th>
-          </tr>
-          <tr>
-          <td>${{ github.workflow }}</td>
-             <td>${{ job.status }}</td>
-           <td>${{ github.server_url }}</td>
-              <td>${{ github.actor }}</td>
-            </tr>
-           </table>
-           <p>Thanks and Regards,</p>
-           <p>***</p>
-           </body>
-           </html>
-         "@
-           $smtpServer = "smtp.gmail.com"
-           $smtpPort = 587
-           $smtpUsername = "kdamaraju@primesoft.net"
-           $smtpPassword = "${{ secrets.SMTP_PASSWORD }}"
-           $mailSettings = @{
-           From = $from
-           To = $to
-           Subject = $subject
-           Body = $htmlBody
-           BodyAsHtml = $true
-           SmtpServer = $smtpServer
-           Port = $smtpPort
-           UseSsl = $true
-           Credential = (New-Object System.Management.Automation.PSCredential -ArgumentList $smtpUsername, (ConvertTo-SecureString -AsPlainText $smtpPassword -Force))
-           }
-           Send-MailKitMessage @mailSettings
-        env:
-          SENDMAIL_PATH: /usr/sbin/sendmail
-   
-   
    
