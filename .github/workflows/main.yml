@@ -83,11 +83,11 @@ jobs:
           password: ${{secrets.SMTP_PASSWORD}}
           subject: Build Results of GIT Actions
           body: |
-            Please find the below details of GITHub actions 
-            Job status :${{job.status}}
-            workflow:${{github.workflow}}
-            Createdby:${{github.actor}}
-            URL:${{github.server_url}}
+            Please find the below details of GITHub actions \
+            Job status :${{job.status}} \
+            workflow:${{github.workflow}} \
+            Createdby:${{github.actor}}  \
+            URL:${{github.repositoryUrl}}
           to: dmaity@primesoft.net
           from: kdamaraju@primesoft.net
    
