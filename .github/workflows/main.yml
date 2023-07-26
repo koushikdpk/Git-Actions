@@ -82,16 +82,11 @@ jobs:
           username: kdamaraju@primesoft.net
           password: ${{secrets.SMTP_PASSWORD}}
           subject: Build Results of GIT Actions
-          body: |
-            Hi Team,
-      
-            Please find the Build Results of GIT Actions:
-            | JobName             | Status          | Build Details          | TriggeredBy      |
-            |---------------------|-----------------|------------------------|------------------|
-            | "${{GITHUB_WORKFLOW}}"  | "${{ job.status }}"  | "${{GITHUB_SERVER_URL}}"    | ${GITHUB_ACTOR} |
-      
-            Thanks and Regards,
-            ***
+          body: Please find the below details of GITHub actions 
+                Job status :${{job.status}}
+                Worflow :${{GITHUB_WORKFLOW}}
+                Createdby:${{GITHUB_ACTOR}}
+                URL:${{GITHUB_SERVER_URL}}
           to: sveerubhotla@primesoft.net
           from: kdamaraju@primesoft.net
    
