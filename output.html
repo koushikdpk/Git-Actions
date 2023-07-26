@@ -1,0 +1,22 @@
+ <html>
+         <body>
+         <p>Hi Team,</p>
+         <p>Please find the below details of GitHub Actions:</p>
+         <table border="1" cellpadding="5">
+          <tr>
+          <th>JobName</th>
+          <th>Status</th>
+          <th>Build Details</th>
+          <th>TriggeredBy</th>
+          </tr>
+           <tr>
+           <td>${{ github.workflow }}</td>
+             <td>${{ job.status }}</td>
+           <td>${{ github.server_url }}</td>
+              <td>${{ github.actor }}</td>
+            </tr>
+           </table>
+           <p>Thanks and Regards,</p>
+           <p>***</p>
+           </body>
+           </html>
