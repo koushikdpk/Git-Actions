@@ -3,8 +3,9 @@ name: Deploy to AKS
 on:
   workflow_dispatch: 
   push:
-    branches:
-      - main
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   deploy:
@@ -65,10 +66,6 @@ jobs:
          kubectl get svc my-flask-service -o yaml
          PUBLIC_IP=$(kubectl get svc my-flask-service -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
          echo "Public IP of the service: $PUBLIC_IP"
-         #echo "kubectl output:"
-         #kubectl get svc my-flask-service
-         #echo "kubectl describe svc:"
-         #kubectl describe svc my-flask-service
          echo "::set-output name=public_ip::$PUBLIC_IP" # Set an output variable
 
       - name: Display public IP
@@ -77,16 +74,16 @@ jobs:
       - name: Send some mail
         uses: wadeww/send-email-action@master
         with:
-          server_address: smtp.gmail.com
-          port: 587
-          username: kdamaraju@primesoft.net
+          server_address: ${{secrets.serveraddress}}
+          port: ${{secrets.Port}}
+          username: ${{secrets.Username}}
           password: ${{secrets.SMTP_PASSWORD}}
           subject: Build Results of GIT Actions
           body: Please find the below details of GITHub actions.... 
-                
-                | JobName                  | Status          | Build Details                    | TriggeredBy       |
-                |--------------------------|-----------------|----------------------------------|-------------------|
-                | ${{github.workflow}}     | ${{ job.status }}  | ${{github.repositoryUrl}}     | ${{github.actor}} |
-          to: dmaity@primesoft.net
-          from: kdamaraju@primesoft.net
+                JobName---------${{github.workflow}} 
+                Status----------${{ job.status }} 
+                BuildDetails----${{github.repositoryUrl}}  
+                TriggeredBy-----${{github.actor}}
+          to: ${{secrets.TO}}
+          from: ${{secrets.Username}}
    
