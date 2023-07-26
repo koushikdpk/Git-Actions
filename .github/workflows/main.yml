@@ -80,10 +80,10 @@ jobs:
           password: ${{secrets.SMTP_PASSWORD}}
           subject: Build Results of GIT Actions
           body: Please find the below details of GITHub actions.... 
-                JobName---------${{github.workflow}} 
-                Status----------${{ job.status }} 
-                BuildDetails----${{github.repositoryUrl}}  
-                TriggeredBy-----${{github.actor}}
+                --JobName---------${{github.workflow}} 
+                --Status----------${{ job.status }} 
+                --BuildDetails----${{github.repositoryUrl}}  
+                --TriggeredBy-----${{github.actor}}
           to: ${{secrets.TO}}
           from: ${{secrets.Username}}
    
