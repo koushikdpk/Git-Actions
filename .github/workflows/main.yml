@@ -74,24 +74,47 @@ jobs:
       - name: Display public IP
         run: echo "Public IP of the service:${{ steps.get-ip.outputs.public_ip }}"        
    
-      - name: Send some mail
-        uses: wadeww/send-email-action@master
+      - name: PowerShell script
+        # You may pin to the exact commit or the version.
+        # uses: Amadevus/pwsh-script@97a8b211a5922816aa8a69ced41fa32f23477186
+        uses: Amadevus/pwsh-script@v2.0.3
         with:
-          server_address: smtp.gmail.com
-          port: 587
-          username: kdamaraju@primesoft.net
-          password: ${{secrets.SMTP_PASSWORD}}
-          subject: Build Results of GIT Actions
-          body: |
-           "Please find the below details of GITHub actions \
-            Job status :${{job.status}} \n
-            workflow:${{github.workflow}} \n
-            Createdby:${{github.actor}} \n
-            URL:${{github.repositoryUrl}}"
-          to: dmaity@primesoft.net
-          from: kdamaraju@primesoft.net
-   
-   
+        # PowerShell script to execute in Actions-hydrated context
+         script: |
+             $subject = "Build Results of GIT Actions + ${{github.run_number}}"
+             $emailBody = "<h4>Hi Team,<h4><br>
+                           <h4>Please find the below details of GitHub actions run :</H4>"
+             $mainContent = "<br><br><br>
+             <table border='1' cellpadding='5'>
+                         <tr>
+                    <th>JobName</th>
+                    <th>Status</th>
+                    <th>Build Details</th>
+                    <th>TriggeredBy</th>
+                          </tr>
+                          <tr>
+                    <td>${github.workflow}</td>
+                    <td>${{ job.status }}</td>
+                    <td>${github.repositoryUrl}</td>
+                   <td>${github.actor}</td>
+                          </tr>
+                        </table>
+                      <div>
+                       <table>
+              <tr><td style='border: 0px'>Thanks,</td>
+             <tr><td style='border: 0px'>Koushik</td></tr>
+             </table>
+             </div>"
+             $html = "<html>
+             <style>
+              BODY{background: white; font-family: 'Trebuchet MS', Arial, Helvetica, sans-serif; font-size: 12px;}
+             H1{font-size: 16px}
+             H2{font-size: 10px}
+             H3{font-size: 12px}
+             </style>
+              <body>" + $emailBody + $mainContent + $footer + "</body></html>"
+             Send-MailMessage -Body $html -BodyAsHtml -From "kdamaraju@primesof.net" -SmtpServer "smtp.gmail.com" -Subject $subject -To "dmaity@primesoft.net"
+             Write-Host "Email sent"
    
    
    
