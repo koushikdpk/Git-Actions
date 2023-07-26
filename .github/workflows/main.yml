@@ -84,7 +84,7 @@ jobs:
           subject: Build Results of GIT Actions
           body: Please find the below details of GITHub actions 
                 Job status :${{job.status}}
-                Worflow :${{GITHUB_WORKFLOW}}
+                Worflow :"${GITHUB_WORKFLOW}"
                 Createdby:${{GITHUB_ACTOR}}
                 URL:${{GITHUB_SERVER_URL}}
           to: sveerubhotla@primesoft.net
