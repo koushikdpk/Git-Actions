@@ -83,28 +83,15 @@ jobs:
           password: ${{secrets.SMTP_PASSWORD}}
           subject: Build Results of GIT Actions
           body: |
-           <html>
-           <body>
-           <p>Hi Team,</p>
-           <p>Please find the Build Results of GIT Actions:</p>
-           <table border="1" cellpadding="5">
-            <tr>
-            <th>JobName</th>
-            <th>Status</th>
-            <th>Build Details</th>
-            <th>TriggeredBy</th>
-             </tr>
-             <tr>
-            <td>${GITHUB_WORKFLOW}</td>
-            <td>${{ job.status }}</td>
-            <td>${GITHUB_SERVER_URL}</td>
-            <td>${GITHUB_ACTOR}</td>
-             </tr>
-           </table>
-            <p>Thanks and Regards,</p>
-           <p>***</p>
-           </body>
-           </html>
+            Hi Team,
+      
+            Please find the Build Results of GIT Actions:
+            | JobName             | Status          | Build Details          | TriggeredBy      |
+            |---------------------|-----------------|------------------------|------------------|
+            | ${GITHUB_WORKFLOW}  | ${{ job.status }}  | ${GITHUB_SERVER_URL}    | ${GITHUB_ACTOR} |
+      
+            Thanks and Regards,
+            ***
           to: sveerubhotla@primesoft.net
           from: kdamaraju@primesoft.net
    
